@@ -1,0 +1,138 @@
+[
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-xxxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-xxxhdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/drawable_cats.png.flat",
+        "source": "kr.cjs.catty.app-main-59:/drawable/cats.png"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-xxxhdpi_ic_launcher_background.webp.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-xxxhdpi/ic_launcher_background.webp"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-mdpi_ic_launcher_background.webp.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-mdpi/ic_launcher_background.webp"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/drawable_catkiss.gif.flat",
+        "source": "kr.cjs.catty.app-main-59:/drawable/catkiss.gif"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-hdpi_ic_launcher_background.webp.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-hdpi/ic_launcher_background.webp"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-hdpi_ic_launcher_foreground.webp.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-hdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-xxxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/drawable_catfoot.png.flat",
+        "source": "kr.cjs.catty.app-main-59:/drawable/catfoot.png"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/drawable_img2.png.flat",
+        "source": "kr.cjs.catty.app-main-59:/drawable/img2.png"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-xxhdpi_ic_launcher_background.webp.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-xxhdpi/ic_launcher_background.webp"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-xhdpi_ic_launcher_foreground.webp.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-xhdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-hdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/xml_backup_rules.xml.flat",
+        "source": "kr.cjs.catty.app-main-59:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-hdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/xml_data_extraction_rules.xml.flat",
+        "source": "kr.cjs.catty.app-main-59:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/drawable_catgoods.png.flat",
+        "source": "kr.cjs.catty.app-main-59:/drawable/catgoods.png"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/drawable_mybitmap.png.flat",
+        "source": "kr.cjs.catty.app-main-59:/drawable/mybitmap.png"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/drawable_catfriends.png.flat",
+        "source": "kr.cjs.catty.app-main-59:/drawable/catfriends.png"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-xxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-xxhdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/drawable_img3.png.flat",
+        "source": "kr.cjs.catty.app-main-59:/drawable/img3.png"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-xxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-mdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/drawable_img1.png.flat",
+        "source": "kr.cjs.catty.app-main-59:/drawable/img1.png"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/drawable_catmozo.png.flat",
+        "source": "kr.cjs.catty.app-main-59:/drawable/catmozo.png"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-mdpi_ic_launcher_foreground.webp.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-mdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "kr.cjs.catty.app-debug-57:/mipmap-xhdpi_ic_launcher_background.webp.flat",
+        "source": "kr.cjs.catty.app-main-59:/mipmap-xhdpi/ic_launcher_background.webp"
+    }
+]
