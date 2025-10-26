@@ -66,6 +66,7 @@ import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
+import com.google.android.gms.location.LocationServices
 import com.kakao.vectormap.*
 import kotlinx.coroutines.launch
 import kr.cjs.catty.ui.theme.CattyTheme
@@ -82,6 +83,7 @@ import java.net.URLEncoder
 import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.camera.CameraUpdateFactory
 import kr.cjs.catty.view.decodeHtml
+import androidx.compose.material.icons.filled.LocationOn
 
 class MainActivity : ComponentActivity() {
 
@@ -205,7 +207,7 @@ fun MainScreen() {
                     composable(Screen.Ninth.name){ InventoryUpdateScreen(modifier = Modifier.fillMaxSize()) }
                     composable(Screen.Tenth.name){ RequirementScreen(modifier = Modifier.fillMaxSize()) }
                     composable(Screen.Eleventh.name){ SwipeScreen(modifier = Modifier.fillMaxSize()) }
-                    composable(Screen.KakaoMap.name){ KakaoMapScreen(modifier = Modifier.fillMaxSize()) }
+                    composable(Screen.KakaoMap.name){ MapPermission(modifier = Modifier.fillMaxSize()) }
 
                 }
             }
@@ -1254,6 +1256,49 @@ fun RequirementUpdateScreen(
     }
 }
 
+@Composable
+fun MapPermission(modifier: Modifier) {
+    var hasPermission by remember { mutableStateOf(false) }
+
+    if (hasPermission) {
+        KakaoMapScreen()
+    } else {
+        RequestLocationPermission {
+            hasPermission = true
+        }
+    }
+}
+
+
+@Composable
+fun RequestLocationPermission(
+    onPermissionGranted: () -> Unit
+) {
+    val context = LocalContext.current
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            Toast.makeText(context, "위치 권한 허용됨", Toast.LENGTH_SHORT).show()
+            onPermissionGranted()
+        } else {
+            Toast.makeText(context, "위치 권한이 필요합니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        val permission = Manifest.permission.ACCESS_FINE_LOCATION
+        when {
+            ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED -> {
+                onPermissionGranted()
+            }
+            else -> {
+                permissionLauncher.launch(permission)
+            }
+        }
+    }
+}
+
 
 
 
@@ -1268,10 +1313,10 @@ fun KakaoMapScreen(
 
     val mapView = remember { MapView(context) }
 
-    //var kakaoMap by remember { mutableStateOf<KakaoMap?>(null) }
+    var kakaoMap by remember { mutableStateOf<KakaoMap?>(null) }
 
-    //val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
-    // ACCESS_FINE_LOCATION 권한 요청
+    val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
+
 
 
     // 지도 라이프사이클 관리
@@ -1336,31 +1381,44 @@ fun KakaoMapScreen(
             modifier = modifier.fillMaxSize(),
             factory = { mapView }
         )
-//        FloatingActionButton(
-//            onClick = {
-//                fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-//                    location?.let {
-//                        val currentLatLng = LatLng.from(it.latitude, it.longitude)
-//                        kakaoMap?.moveCamera(
-//                            CameraUpdateFactory.newCenterPosition(currentLatLng)
-//                        )
-//                    } ?: run {
-//                        Toast.makeText(context, "현재 위치를 가져올 수 없습니다.", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//            },
-//            modifier = Modifier
-//                .align(Alignment.BottomEnd)
-//                .padding(16.dp)
-//                .size(56.dp),
-//            containerColor = Color.White,
-//            contentColor = Color.Black
-//        ) {
-//            Icon(
-//                imageVector = Icons.Default.MyLocation,
-//                contentDescription = "현재 위치로 이동"
-//            )
-//        }
-  }
+        FloatingActionButton(
+            onClick = {
+                val permission = Manifest.permission.ACCESS_FINE_LOCATION
+                if (ContextCompat.checkSelfPermission(
+                        context,
+                        permission
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    try {
+                        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                            location?.let {
+                                val currentLatLng = LatLng.from(it.latitude, it.longitude)
+                                kakaoMap?.moveCamera(
+                                    CameraUpdateFactory.newCenterPosition(currentLatLng)
+                                )
+                            } ?: run {
+                                Toast.makeText(context, "현재 위치를 가져올 수 없습니다.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } catch (e: SecurityException) {
+                        Toast.makeText(context, "위치 권한이 필요합니다.", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(context, "위치 권한이 허용되지 않았습니다.", Toast.LENGTH_SHORT).show()
+                }
+            },
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp),
+            containerColor = Color.White,
+            contentColor = Color.Black
+        ) {
+            Icon(
+                imageVector = Icons.Filled.LocationOn,
+                contentDescription = "현재 위치로 이동"
+            )
+        }
+
+    }
 
 }
