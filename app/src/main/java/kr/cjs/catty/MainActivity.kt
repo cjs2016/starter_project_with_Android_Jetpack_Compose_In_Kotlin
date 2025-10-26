@@ -1338,17 +1338,20 @@ fun KakaoMapScreen(
                             return LatLng.from(latitude, longitude)
                         }
 
-                        override fun onMapReady(kakaoMap: KakaoMap) {
+                        override fun onMapReady(map: KakaoMap) {
+
+                            kakaoMap = map
+
                             val cameraUpdate = CameraUpdateFactory.newCenterPosition(
                                 LatLng.from(latitude, longitude)
                             )
-                            kakaoMap.moveCamera(cameraUpdate)
+                            map.moveCamera(cameraUpdate)
 
                             // 제스처 활성화 예시
-                            kakaoMap.setGestureEnable(GestureType.Pan, true)     // 드래그 이동 허용
-                            kakaoMap.setGestureEnable(GestureType.Zoom, true)    // 핀치 줌 허용
-                            kakaoMap.setGestureEnable(GestureType.Rotate, true)  // 두 손가락 회전 허용
-                            kakaoMap.setGestureEnable(GestureType.Tilt, true)    // 기울이기 허용
+                            map.setGestureEnable(GestureType.Pan, true)     // 드래그 이동 허용
+                            map.setGestureEnable(GestureType.Zoom, true)    // 핀치 줌 허용
+                            map.setGestureEnable(GestureType.Rotate, true)  // 두 손가락 회전 허용
+                            map.setGestureEnable(GestureType.Tilt, true)    // 기울이기 허용
                         }
                     }
                 )
