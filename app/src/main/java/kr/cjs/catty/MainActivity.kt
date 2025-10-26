@@ -129,6 +129,7 @@ fun MainScreen() {
     CattyTheme  {
         ModalNavigationDrawer(
             drawerState = drawerState,
+            gesturesEnabled = false,
             drawerContent = {
                 ModalDrawerSheet {
                     Box {
@@ -1259,13 +1260,19 @@ fun RequirementUpdateScreen(
 @Composable
 fun KakaoMapScreen(
     modifier: Modifier = Modifier,
-    latitude: Double = 37.5665,
-    longitude: Double = 126.9780
+    latitude: Double = 37.5303,
+    longitude: Double = 126.9664
 ) {
     val context = LocalContext.current
     val lifecycle = LocalLifecycleOwner.current.lifecycle
 
     val mapView = remember { MapView(context) }
+
+    //var kakaoMap by remember { mutableStateOf<KakaoMap?>(null) }
+
+    //val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
+    // ACCESS_FINE_LOCATION 권한 요청
+
 
     // 지도 라이프사이클 관리
     DisposableEffect(lifecycle) {
@@ -1291,16 +1298,24 @@ fun KakaoMapScreen(
                                 LatLng.from(latitude, longitude)
                             )
                             kakaoMap.moveCamera(cameraUpdate)
+
+                            // 제스처 활성화 예시
+                            kakaoMap.setGestureEnable(GestureType.Pan, true)     // 드래그 이동 허용
+                            kakaoMap.setGestureEnable(GestureType.Zoom, true)    // 핀치 줌 허용
+                            kakaoMap.setGestureEnable(GestureType.Rotate, true)  // 두 손가락 회전 허용
+                            kakaoMap.setGestureEnable(GestureType.Tilt, true)    // 기울이기 허용
                         }
                     }
                 )
             }
 
             override fun onResume(owner: LifecycleOwner) {
+                super.onResume(owner)
                 mapView.resume()
             }
 
             override fun onPause(owner: LifecycleOwner) {
+                super.onPause(owner)
                 mapView.pause()
             }
 
@@ -1311,11 +1326,41 @@ fun KakaoMapScreen(
         }
 
         lifecycle.addObserver(observer)
-        onDispose { lifecycle.removeObserver(observer) }
+        onDispose {
+            lifecycle.removeObserver(observer)
+        }
     }
 
-    AndroidView(
-        modifier = modifier.fillMaxSize(),
-        factory = { mapView }
-    )
+    Box(modifier = Modifier.fillMaxSize()) {
+        AndroidView(
+            modifier = modifier.fillMaxSize(),
+            factory = { mapView }
+        )
+//        FloatingActionButton(
+//            onClick = {
+//                fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+//                    location?.let {
+//                        val currentLatLng = LatLng.from(it.latitude, it.longitude)
+//                        kakaoMap?.moveCamera(
+//                            CameraUpdateFactory.newCenterPosition(currentLatLng)
+//                        )
+//                    } ?: run {
+//                        Toast.makeText(context, "현재 위치를 가져올 수 없습니다.", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//            },
+//            modifier = Modifier
+//                .align(Alignment.BottomEnd)
+//                .padding(16.dp)
+//                .size(56.dp),
+//            containerColor = Color.White,
+//            contentColor = Color.Black
+//        ) {
+//            Icon(
+//                imageVector = Icons.Default.MyLocation,
+//                contentDescription = "현재 위치로 이동"
+//            )
+//        }
+  }
+
 }

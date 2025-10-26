@@ -1,2 +1,29 @@
-/build
+# Gradle files
+.gradle/
+build/
+
+# IDE files
+.idea/
+*.iml
+*~
+*.swp
+
+# Local properties
 local.properties
+
+# Keystore files
+*.jks
+*.keystore
+
+# Build output
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# Other
+.DS_Store
+captures/
+.cxx/
+*.hprof
+.kotlin/
