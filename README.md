@@ -17,6 +17,7 @@
 </table>
 
 ### 화면 (2025.9월 ~ 현재)
+<img width="407" height="814" alt="image" src="https://github.com/user-attachments/assets/477351c0-8969-4f50-862c-22904298af69" />
 <img width="381" height="805" alt="image" src="https://github.com/user-attachments/assets/dce4b659-2ebf-4686-a159-ecaa7a769761" />
 <img width="375" height="797" alt="image" src="https://github.com/user-attachments/assets/4a6d48ba-f970-4ebc-9f61-043cb19bea4b" />
 <img width="380" height="803" alt="image" src="https://github.com/user-attachments/assets/c8eae6a4-1597-47df-8491-ecc3c7d60c4a" />
