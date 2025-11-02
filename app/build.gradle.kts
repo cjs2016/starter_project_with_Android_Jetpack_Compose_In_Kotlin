@@ -111,7 +111,7 @@ dependencies {
     kapt ("com.google.dagger:hilt-android-compiler:2.45")
 
     implementation("com.google.accompanist:accompanist-swiperefresh:0.28.0")
-    implementation("com.google.accompanist:accompanist-pager:0.28.0")
+
     implementation("com.google.accompanist:accompanist-pager-indicators:0.28.0")
     implementation("com.google.accompanist:accompanist-placeholder-material:0.28.0")
     implementation("com.google.accompanist:accompanist-placeholder-material:0.28.0")
@@ -120,6 +120,8 @@ dependencies {
 
     implementation("androidx.compose.material:material-icons-extended:1.7.0")
 
+
+    implementation("androidx.compose.material3:material3:1.3.0")
 
   }
 

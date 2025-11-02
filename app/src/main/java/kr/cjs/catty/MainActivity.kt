@@ -80,10 +80,6 @@ import com.kakao.vectormap.camera.CameraUpdateFactory
 import kr.cjs.catty.view.decodeHtml
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import com.google.accompanist.pager.rememberPagerState
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.pagerTabIndicatorOffset
 import androidx.annotation.RequiresApi
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -97,6 +93,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
+
+import androidx.compose.ui.res.colorResource
 
 
 
@@ -137,11 +140,10 @@ enum class Screen(
 }
 
 @RequiresApi(Build.VERSION_CODES.M)
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ScreenTabCarousel(
     pages: MutableList<String> = arrayListOf(
-            "",
             "미니프로젝트",
             "카카오맵",
             "Mediapipe",
@@ -150,7 +152,7 @@ fun ScreenTabCarousel(
             )
 ){
     val context = LocalContext.current
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(pageCount = { pages.size })
     val coroutineScope = rememberCoroutineScope()
 
     Column {
@@ -159,14 +161,8 @@ fun ScreenTabCarousel(
             edgePadding = 0.dp,
             containerColor =  Color(context.resources.getColor(R.color.white, null)),
             indicator = { tabPositions ->
-                val currentTab = tabPositions[pagerState.currentPage]
-                // indicator를 직접 Box로 구현
-                Box(
-                    modifier = Modifier
-                        .offset(x = currentTab.left)
-                        .width(currentTab.width)
-                        .height(2.dp)
-                        .background(MaterialTheme.colorScheme.primary)
+                TabRowDefaults.Indicator(
+                    Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage])
                 )
             }
         ) {
@@ -190,7 +186,6 @@ fun ScreenTabCarousel(
         )
 
         HorizontalPager(
-            count = pageScreens.size,
             state = pagerState,
             modifier = Modifier.fillMaxSize()
         ) { page ->
@@ -209,7 +204,6 @@ private fun TabHeader(
 ) {
     val context = LocalContext.current
     val color = if (isSelected) R.color.purple_700 else R.color.white
-    val ripple = null
     val interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
 
     Box(
@@ -220,7 +214,7 @@ private fun TabHeader(
                 enabled = true,
                 role = Role.Tab,
                 interactionSource = interactionSource,
-                indication = ripple
+                indication = ripple()
             )
             .padding(top = 10.dp, bottom = 10.dp)
     ) {
@@ -232,12 +226,12 @@ private fun TabHeader(
 @Composable
 private fun TabCarousel(title: String, isSelected: Boolean) {
     val context = LocalContext.current
-    val color = if (isSelected) R.color.purple_700 else R.color.white
-    val textColor = if (isSelected) R.color.white else R.color.black
+    val backgroundColor = if (isSelected) colorResource(id = R.color.teal_200) else colorResource(id = R.color.white)
+    val textColor = if (isSelected) colorResource(id = R.color.purple_700) else colorResource(id = R.color.black)
     Row(
         modifier = Modifier
             .background(
-                color = Color(context.resources.getColor(color, null)),
+                color = backgroundColor,
                 shape = RoundedCornerShape(25.dp)
             )
             .padding(start = 10.dp, top = 10.dp, end = 10.dp, bottom = 10.dp)
@@ -247,7 +241,7 @@ private fun TabCarousel(title: String, isSelected: Boolean) {
 
         Text(
             text = title,
-            color = Color(context.resources.getColor(textColor, null)),
+            color = textColor,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
         )
@@ -274,7 +268,8 @@ fun MainScreen() {
                     Box {
 
                         Column(
-                            modifier = Modifier.padding(horizontal = 16.dp)
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp)
                                 .verticalScroll(rememberScrollState())
                         ) {
                             Row (
@@ -356,7 +351,9 @@ fun MainScreen() {
                 sheetState = sheetState
             ) {
                 Column(
-                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text("Bottom Sheet Content")
@@ -414,7 +411,9 @@ fun AppBottomBar(onDisplayClick: () -> Unit) {
                 Image(
                     painter = painterResource(id = R.drawable.catfoot),
                     contentDescription = "Display Bottom Sheet",
-                    modifier = Modifier.size(48.dp).clip(CircleShape)
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
                 )
             }
         }
@@ -448,7 +447,9 @@ fun HomeScreen(
                 modifier = Modifier.padding(horizontal = 30.dp)
         )
 
-        SwipeScreen(modifier = Modifier.weight(1.5f).fillMaxSize())
+        SwipeScreen(modifier = Modifier
+            .weight(1.5f)
+            .fillMaxSize())
 
     }
 }
@@ -459,7 +460,9 @@ fun SimulationBtn(
     modifier: Modifier = Modifier
 ){
     Button(
-        modifier = modifier.fillMaxWidth().padding(horizontal = 16.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
         onClick = onSimulateClick,
         colors = ButtonDefaults.buttonColors(Color.Black)
     ){
@@ -528,13 +531,18 @@ fun ThirdScreen(modifier: Modifier) {
 fun Counter(modifier: Modifier, count: Int,onCountChanged:(Int)->Unit){
 
     Column(
-        modifier = Modifier.padding(5.dp).fillMaxSize().background(Color(0xFFEADDFF)),
+        modifier = Modifier
+            .padding(5.dp)
+            .fillMaxSize()
+            .background(Color(0xFFEADDFF)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Text(
             text = count.toString(),
-            modifier = modifier.fillMaxWidth().padding(8.dp),
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(8.dp),
             fontSize = 100.sp,
             textAlign = TextAlign.Center,
 
@@ -562,7 +570,9 @@ fun FourthScreen(modifier: Modifier){
     val viewModel: LottoViewModel = viewModel()
     Column(modifier = modifier) {
         Button(
-            modifier = Modifier.padding(8.dp).fillMaxWidth(),
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth(),
             onClick = { viewModel.generate() }
         ) {
             Text(text = "번호 생성", fontSize = 20.sp)
@@ -653,14 +663,19 @@ fun Counter2(
     val count by viewModel.count1
 
     Column(
-        modifier = Modifier.padding(5.dp).fillMaxWidth().background(Color(0xFFEADDFF)),
+        modifier = Modifier
+            .padding(5.dp)
+            .fillMaxWidth()
+            .background(Color(0xFFEADDFF)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Text(
 
             text = count.toString(),
-            modifier = modifier.fillMaxWidth().padding(8.dp),
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(8.dp),
             fontSize = 100.sp,
             textAlign = TextAlign.Center,
 
@@ -719,7 +734,9 @@ fun FifthScreen(modifier: Modifier){
 @Composable
 fun SongItem(song: Song) {
     Card(
-        modifier = Modifier.padding(8.dp).fillMaxWidth(),
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth(),
         elevation = CardDefaults.cardElevation(8.dp),
     ) {
         Row(
@@ -953,7 +970,9 @@ fun InventoryScreen(modifier: Modifier) {
         RequirementScreen(modifier= modifier.weight(1f))
 
         LazyColumn(
-            modifier = modifier.weight(1f).padding(16.dp),
+            modifier = modifier
+                .weight(1f)
+                .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
 
@@ -1070,7 +1089,9 @@ fun DepartmentScreen(modifier: Modifier) {
         factory = SuppliesViewModel.Factory(LocalContext.current.applicationContext as Application)
     )
     Column(
-        modifier = modifier.fillMaxSize().padding(16.dp),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -1103,7 +1124,9 @@ fun NaverSearchScreen(modifier: Modifier, navController: NavController) {
 
     Column(modifier = modifier) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             TextField(
@@ -1138,10 +1161,13 @@ fun NaverSearchScreen(modifier: Modifier, navController: NavController) {
                 val news = lazyNewsItems[index]
                 if (news != null) {
                     Card(
-                        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp).clickable {
-                            val encodedUrl = URLEncoder.encode(news.link, "UTF-8")
-                            navController.navigate("${Screen.NaverSearchDetail.name}/$encodedUrl")
-                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp)
+                            .clickable {
+                                val encodedUrl = URLEncoder.encode(news.link, "UTF-8")
+                                navController.navigate("${Screen.NaverSearchDetail.name}/$encodedUrl")
+                            },
                         elevation = CardDefaults.cardElevation(4.dp)
                     ) {
                         Column(Modifier.padding(16.dp)) {
@@ -1233,7 +1259,9 @@ fun InventoryUpdateScreen(modifier: Modifier) {
                 )
 
         LazyColumn(
-            modifier = modifier.weight(1f).padding(16.dp),
+            modifier = modifier
+                .weight(1f)
+                .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
 
