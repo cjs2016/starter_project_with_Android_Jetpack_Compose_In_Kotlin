@@ -26,4 +26,6 @@ local.properties
 captures/
 .cxx/
 *.hprof
-.kotlin/
+.kotlin
+assets
+

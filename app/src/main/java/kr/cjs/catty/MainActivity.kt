@@ -9,7 +9,6 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
-import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
 import android.webkit.WebView
@@ -20,6 +19,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -79,7 +79,6 @@ import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.camera.CameraUpdateFactory
 import kr.cjs.catty.view.decodeHtml
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 import androidx.annotation.RequiresApi
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -94,12 +93,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 
 import androidx.compose.ui.res.colorResource
+
+import android.os.Bundle
+
+import kr.cjs.catty.view.*
+
 
 
 
@@ -108,10 +110,14 @@ import androidx.compose.ui.res.colorResource
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         KeyHashUtil.getHashKey(this)
+
+
 
         setContent {
             ScreenTabCarousel()
@@ -134,8 +140,7 @@ enum class Screen(
     Tenth(title = "Resource Tenth"),
     Eleventh(title="Swipe Screen"),
 
-    KakaoMap(title = "KAKAO Map Search")
-
+    KakaoMap(title = "KAKAO Map Search"),
 
 }
 
@@ -146,8 +151,8 @@ fun ScreenTabCarousel(
     pages: MutableList<String> = arrayListOf(
             "미니프로젝트",
             "카카오맵",
-            "Mediapipe",
-            "쇼핑몰",
+            "Mediapipe1",
+            "Mediapipe2",
             "물품관리"
             )
 ){
@@ -180,7 +185,8 @@ fun ScreenTabCarousel(
         val pageScreens: List<@Composable () -> Unit> = listOf(
             { MainScreen() },
             { KakaoMapScreen() },
-            { FifthScreen(modifier = Modifier.fillMaxSize()) },
+            {ObjectDetectionScreen()},
+            {CameraDetectionScreen()},
             { SixthScreen(modifier = Modifier.fillMaxSize()) },
             { SwipeScreen(modifier = Modifier.fillMaxSize()) }
         )
@@ -1558,3 +1564,4 @@ fun KakaoMapScreen(
     }
 
 }
+
