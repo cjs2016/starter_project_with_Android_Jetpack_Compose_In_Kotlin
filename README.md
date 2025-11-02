@@ -12,7 +12,7 @@
 <tr>
   <td>10.25</td>
   <td>카카오맵 현재 위치 이동</td>
-  <td>retrofit 으로 공공데이터를 자동으로 가져오게 한 후 data class 에 담아 카카오맵에 업데이트 되도록 표시  </td>
+  <td>retrofit, database </td>
 </tr>  
 </table>
 
