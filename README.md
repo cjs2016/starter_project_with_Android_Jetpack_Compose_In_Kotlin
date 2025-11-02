@@ -1,20 +1,3 @@
-<table>
-<tr>
-  <th>날짜</th>
-  <th>오늘 한 일</th>
-  <th>과제</th>
-</tr>
-<tr>
-  <td>10.24</td>
-  <td>카카오맵 상하좌우 이동</td>
-  <td>&nbsp;</td>
-</tr> 
-<tr>
-  <td>10.25</td>
-  <td>카카오맵 현재 위치 이동</td>
-  <td>retrofit, database </td>
-</tr>  
-</table>
 
 ### 화면 (2025.9월 ~ 현재)
 <img width="407" height="814" alt="image" src="https://github.com/user-attachments/assets/477351c0-8969-4f50-862c-22904298af69" />
@@ -25,7 +8,7 @@
 <img width="377" height="807" alt="image" src="https://github.com/user-attachments/assets/32c338a6-0028-4879-8c92-53f0cae83485" />
 <img width="385" height="807" alt="image" src="https://github.com/user-attachments/assets/251d46be-0d66-4bb0-864f-aa7fcf27a1b8" />
 <img width="400" height="806" alt="image" src="https://github.com/user-attachments/assets/bcfd8d9e-71db-42f3-ac28-82c791934370" />
-![Screenshot_20251103-041137_Catty](https://github.com/user-attachments/assets/0a2d8a34-31cb-4456-b76d-1317fb8f669b)
+<img width="465" height="739" alt="image" src="https://github.com/user-attachments/assets/63f92882-4ba2-4749-89ee-f3b13362a7b7" />
 
 
 
