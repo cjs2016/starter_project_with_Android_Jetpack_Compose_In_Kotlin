@@ -7,6 +7,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.devtools.ksp")
     kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 val properties = Properties()
@@ -105,6 +106,19 @@ dependencies {
 
     implementation("com.kakao.maps.open:android:2.12.8")
 
+    implementation("com.google.dagger:hilt-android:2.45")
+
+    kapt ("com.google.dagger:hilt-android-compiler:2.45")
+
+    implementation("com.google.accompanist:accompanist-swiperefresh:0.28.0")
+    implementation("com.google.accompanist:accompanist-pager:0.28.0")
+    implementation("com.google.accompanist:accompanist-pager-indicators:0.28.0")
+    implementation("com.google.accompanist:accompanist-placeholder-material:0.28.0")
+    implementation("com.google.accompanist:accompanist-placeholder-material:0.28.0")
+
+    implementation("androidx.compose.material3:material3:1.4.0")
+
+    implementation("androidx.compose.material:material-icons-extended:1.7.0")
 
 
   }

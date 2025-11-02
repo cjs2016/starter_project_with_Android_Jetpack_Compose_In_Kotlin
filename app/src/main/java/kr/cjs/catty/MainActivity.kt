@@ -1,6 +1,6 @@
 package kr.cjs.catty
 
-
+import android.os.Build
 import android.Manifest
 import android.app.Application
 import android.content.ActivityNotFoundException
@@ -29,11 +29,6 @@ import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -83,8 +78,31 @@ import java.net.URLEncoder
 import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.camera.CameraUpdateFactory
 import kr.cjs.catty.view.decodeHtml
-import androidx.compose.material.icons.filled.LocationOn
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+import com.google.accompanist.pager.rememberPagerState
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.pagerTabIndicatorOffset
+import androidx.annotation.RequiresApi
 
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.ui.semantics.Role
+import androidx.compose.foundation.shape.RoundedCornerShape
+
+import androidx.compose.runtime.Composable
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+
+
+
+
+
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,7 +111,7 @@ class MainActivity : ComponentActivity() {
         KeyHashUtil.getHashKey(this)
 
         setContent {
-            MainScreen()
+            ScreenTabCarousel()
         }
     }
 }
@@ -117,6 +135,125 @@ enum class Screen(
 
 
 }
+
+@RequiresApi(Build.VERSION_CODES.M)
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun ScreenTabCarousel(
+    pages: MutableList<String> = arrayListOf(
+            "",
+            "미니프로젝트",
+            "카카오맵",
+            "Mediapipe",
+            "쇼핑몰",
+            "물품관리"
+            )
+){
+    val context = LocalContext.current
+    val pagerState = rememberPagerState()
+    val coroutineScope = rememberCoroutineScope()
+
+    Column {
+        ScrollableTabRow(
+            selectedTabIndex = pagerState.currentPage,
+            edgePadding = 0.dp,
+            containerColor =  Color(context.resources.getColor(R.color.white, null)),
+            indicator = { tabPositions ->
+                val currentTab = tabPositions[pagerState.currentPage]
+                // indicator를 직접 Box로 구현
+                Box(
+                    modifier = Modifier
+                        .offset(x = currentTab.left)
+                        .width(currentTab.width)
+                        .height(2.dp)
+                        .background(MaterialTheme.colorScheme.primary)
+                )
+            }
+        ) {
+            pages.forEachIndexed { index, title ->
+                val isSelected = pagerState.currentPage == index
+
+                TabHeader(
+                    title,
+                    isSelected,
+                    onClick = { coroutineScope.launch { pagerState.animateScrollToPage(index) } },
+                )
+            }
+        }
+
+        val pageScreens: List<@Composable () -> Unit> = listOf(
+            { MainScreen() },
+            { KakaoMapScreen() },
+            { FifthScreen(modifier = Modifier.fillMaxSize()) },
+            { SixthScreen(modifier = Modifier.fillMaxSize()) },
+            { SwipeScreen(modifier = Modifier.fillMaxSize()) }
+        )
+
+        HorizontalPager(
+            count = pageScreens.size,
+            state = pagerState,
+            modifier = Modifier.fillMaxSize()
+        ) { page ->
+            pageScreens[page].invoke()
+        }
+    }
+
+}
+
+@RequiresApi(Build.VERSION_CODES.M)
+@Composable
+private fun TabHeader(
+    title: String,
+    isSelected: Boolean,
+    onClick: () -> Unit
+) {
+    val context = LocalContext.current
+    val color = if (isSelected) R.color.purple_700 else R.color.white
+    val ripple = null
+    val interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
+
+    Box(
+        modifier = Modifier
+            .selectable(
+                selected = isSelected,
+                onClick = { onClick() },
+                enabled = true,
+                role = Role.Tab,
+                interactionSource = interactionSource,
+                indication = ripple
+            )
+            .padding(top = 10.dp, bottom = 10.dp)
+    ) {
+        TabCarousel(title = title, isSelected = isSelected)
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.M)
+@Composable
+private fun TabCarousel(title: String, isSelected: Boolean) {
+    val context = LocalContext.current
+    val color = if (isSelected) R.color.purple_700 else R.color.white
+    val textColor = if (isSelected) R.color.white else R.color.black
+    Row(
+        modifier = Modifier
+            .background(
+                color = Color(context.resources.getColor(color, null)),
+                shape = RoundedCornerShape(25.dp)
+            )
+            .padding(start = 10.dp, top = 10.dp, end = 10.dp, bottom = 10.dp)
+            .width(if (title.length < 11) 70.dp else 110.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+
+        Text(
+            text = title,
+            color = Color(context.resources.getColor(textColor, null)),
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -1068,39 +1205,7 @@ fun SwipeScreen(modifier: Modifier){
 
         }
 
-         IconButton(
-             onClick = {
-                 scope.launch {
-                     val previous = pagerState.currentPage - 1
-                     if (previous >= 0) {
-                         pagerState.animateScrollToPage(previous)
-                     }
-                 }
-             },
-             modifier = Modifier
-                 .align(Alignment.CenterStart)
-                 .padding(start = 8.dp)
-                 .background(Color.White.copy(alpha = 0.6f), shape = CircleShape)
-         ) {
-             Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-         }
-         IconButton(
-             onClick = {
-                 scope.launch {
-                     val next = pagerState.currentPage + 1
-                     if (next < pagerState.pageCount) {
-                         pagerState.animateScrollToPage(next)
-                     }
 
-                 }
-             },
-             modifier = Modifier
-                 .align(Alignment.CenterEnd)
-                 .padding(end = 8.dp)
-                 .background(Color.White.copy(alpha = 0.6f), shape = CircleShape)
-         ) {
-             Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = "Forward")
-         }
 
     }
 
